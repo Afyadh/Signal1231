@@ -15,13 +15,6 @@ Connection.ClassName = "Connection"
 
 -- // Connection Constructor
 function Connection.new(Signal: table, Callback: any): table
-    -- // Check Signal
-    local typeofSignal = typeof(Signal)
-    assert(typeofSignal == "table" and Signal.ClassName == "Signal")
-
-    -- // Check callback
-    local typeofCallback = typeof(Callback)
-    assert(typeofCallback == "function")
 
     -- // Create
     local self = setmetatable({}, Connection)
@@ -58,9 +51,6 @@ Connection.disconnect = Connection.Disconnect
 
 -- // Signal Constructor
 function Signal.new(Name: string): table
-    -- // Check Name
-    local typeofName = typeof(Name)
-    assert(typeofName == "string")
 
     -- // Create
     local self = setmetatable({}, Signal)
@@ -75,9 +65,6 @@ end
 
 -- // Connect to a signal
 function Signal.Connect(self: table, Callback: any): table
-    -- // Check callback
-    local typeofCallback = typeof(Callback)
-    assert(typeofCallback == "function")
 
     -- // Create Connection Object
     local connection = Connection.new(self, Callback)
