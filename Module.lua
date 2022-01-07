@@ -15,6 +15,13 @@ Connection.ClassName = "Connection"
 
 -- // Connection Constructor
 function Connection.new(Signal: table, Callback: any): table
+    -- // Check Signal
+    local typeofSignal = typeof(Signal)
+    assert(typeofSignal == "table" and Signal.ClassName == "Signal", "bad argument #1 to 'new' (Signal expected, got " .. typeofSignal .. ")")
+
+    -- // Check callback
+    local typeofCallback = typeof(Callback)
+    assert(typeofCallback == "function", "bad argument #2 for 'new' (function expected, got " .. typeofCallback .. ")")
 
     -- // Create
     local self = setmetatable({}, Connection)
@@ -47,9 +54,13 @@ function Connection.Disconnect(self: table): nil
     -- // Remove
     table.remove(Connections, selfInTable)
 end
+Connection.disconnect = Connection.Disconnect
 
 -- // Signal Constructor
 function Signal.new(Name: string): table
+    -- // Check Name
+    local typeofName = typeof(Name)
+    assert(typeofName == "string", "bad argument #1 for 'new' (string expected, got " .. typeofName .. ")")
 
     -- // Create
     local self = setmetatable({}, Signal)
@@ -64,6 +75,9 @@ end
 
 -- // Connect to a signal
 function Signal.Connect(self: table, Callback: any): table
+    -- // Check callback
+    local typeofCallback = typeof(Callback)
+    assert(typeofCallback == "function", "bad argument #1 for 'Connect' (function expected, got " .. typeofCallback .. ")")
 
     -- // Create Connection Object
     local connection = Connection.new(self, Callback)
@@ -124,14 +138,19 @@ function Signal.Wait(self: table, Timeout: number): any
         break
     end
 
+    -- // Disconnect
+    connection:Disconnect()
+
     -- // Return
     return unpack(returnVal)
 end
+Signal.wait = Signal.Wait
 
 -- // Destroy a signal
 function Signal.Destroy(self: table): nil
     self = nil
 end
+Signal.destroy = Signal.destroy
 
 -- //
 return Signal
