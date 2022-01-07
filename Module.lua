@@ -47,7 +47,6 @@ function Connection.Disconnect(self: table): nil
     -- // Remove
     table.remove(Connections, selfInTable)
 end
-Connection.disconnect = Connection.Disconnect
 
 -- // Signal Constructor
 function Signal.new(Name: string): table
@@ -125,19 +124,14 @@ function Signal.Wait(self: table, Timeout: number): any
         break
     end
 
-    -- // Disconnect
-    connection:Disconnect()
-
     -- // Return
     return unpack(returnVal)
 end
-Signal.wait = Signal.Wait
 
 -- // Destroy a signal
 function Signal.Destroy(self: table): nil
     self = nil
 end
-Signal.destroy = Signal.destroy
 
 -- //
 return Signal
